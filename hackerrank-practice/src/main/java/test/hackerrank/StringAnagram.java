@@ -1,6 +1,7 @@
 package test.hackerrank;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,21 +12,25 @@ public class StringAnagram {
 
 	static int checkAnagram(String str) {
 		int len = str.length();
+		int count = 0;
+		String str1, str2;
 		if (len %2 != 0) {
 			return -1;
 		}
-	List<Character> ch1List = new ArrayList<>();
-	List<Character> ch2List = new ArrayList<>();
 		int half = len/2;
-		for (int i=0;i<half;i++) {
-			ch1List.add(str.charAt(i));
+		str1=str.substring(0, half);
+		str2=str.substring(half);
+		for (int i=0;i<str2.length();i++) {
+			if (str1.indexOf(str2.charAt(i)) == -1) {
+				count+=1;
+				continue;
+			} else {
+				String temp1 = str1.substring(0, str1.indexOf(str2.charAt(i)));
+				String temp2 = str1.substring(str1.indexOf(str2.charAt(i))+1);
+				str1=temp1+temp2;
+			}
 		}
-		
-		for (int i=half;i<len;i++) {
-			ch2List.add(str.charAt(i));
-		}
-		ch1List.removeAll(ch2List);
-		return ch1List.size();
+		return count;
 	}
 	
 	public static void main(String[] argv) {
